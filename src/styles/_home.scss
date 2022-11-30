@@ -107,6 +107,125 @@
     }
     .chat {
       flex: 2;
+      .chatInfo {
+        padding: 10px;
+        background-color: $blue;
+        height: 60px;
+        color: $white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .chatIcons {
+          display: flex;
+          gap: 10px;
+          > * {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+      .messages {
+        background-color: $chat;
+        height: calc(100% - 120px);
+        padding: 10px;
+        overflow: scroll;
+        overflow-x: hidden;
+        .message {
+          display: flex;
+          gap: 20px;
+          margin-bottom: 20px;
+          &.owner {
+            flex-direction: row-reverse;
+            .messageContent {
+              align-items: flex-end;
+              p {
+                background-color: $blue;
+                color: $white;
+                border-radius: 10px 0 10px 10px;
+              }
+            }
+          }
+          .messageInfo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: gray;
+            font-weight: 300;
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+            span {
+              font-size: 12px;
+            }
+          }
+          .messageContent {
+            max-width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            p {
+              background-color: $white;
+              padding: 10px 20px;
+              border-radius: 0 10px 10px 10px;
+              width: max-content;
+            }
+            img {
+              width: 50%;
+            }
+          }
+        }
+      }
+      .input {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 60px;
+        background-color: $white;
+        justify-content: space-between;
+        input {
+          width: 100%;
+          border: none;
+          outline: none;
+          background: transparent;
+          font-size: 18px;
+          &::placeholder {
+            color: $blue;
+          }
+        }
+        .send {
+          display: flex;
+          align-items: center;
+          color: $blue;
+          gap: 10px;
+          .icon {
+            width: 24px;
+            height: 24px;
+            transition: all 0.2s;
+            cursor: pointer;
+            &:hover {
+              scale: 1.2;
+            }
+          }
+          label {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
     }
   }
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: $blue;
+  border-radius: 5px;
 }
