@@ -1,0 +1,111 @@
+.formContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $main;
+  .formWrapper {
+    background-color: $white;
+    padding: 20px 60px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    .logo {
+      color: $blue;
+      font-weight: bold;
+      font-size: 24px;
+    }
+    .title {
+      color: $blue;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .link {
+      color: $blue;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      .avatar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        color: $blue;
+        img {
+          width: 50px;
+        }
+      }
+      button {
+        background-color: $blue;
+        padding: 10px;
+        border: none;
+        color: $white;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover {
+          background-color: $darkBlue;
+        }
+      }
+      .formField {
+        display: flex;
+        flex-direction: column;
+        color: $blue;
+        position: relative;
+        p {
+          font-size: 12px;
+          color: $red;
+        }
+        input {
+          padding: 15px 0;
+          border: none;
+          border-bottom: 3px solid $blue;
+          outline: none;
+          width: 300px;
+          color: $blue;
+          background: transparent;
+          transition: all 0.2s;
+          &::placeholder {
+            color: transparent;
+          }
+          &:placeholder-shown ~ .label {
+            cursor: text;
+            top: 20px;
+          }
+          &:required,
+          &:invalid {
+            box-shadow: none;
+          }
+        }
+        .label {
+          position: absolute;
+          top: 0;
+          display: block;
+          transition: 0.2s;
+          font-size: 1rem;
+          color: $blue;
+        }
+
+        input:focus {
+          ~ .label {
+            position: absolute;
+            top: -15px;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: $darkBlue;
+          }
+          padding-bottom: 6px;
+          font-weight: 700;
+          border-width: 3px;
+          border-image: linear-gradient(to right, $darkBlue, $blue);
+          border-image-slice: 1;
+        }
+      }
+    }
+  }
+}
