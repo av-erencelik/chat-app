@@ -55,6 +55,24 @@
           }
         }
       }
+      .search {
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid $white;
+        .searchForm {
+          width: 100%;
+          input {
+            width: 100%;
+            background-color: transparent;
+            color: $white;
+            border: none;
+            outline: none;
+            &::placeholder {
+              color: $white;
+            }
+          }
+        }
+      }
     }
     .chat {
       flex: 2;
