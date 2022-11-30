@@ -1,0 +1,63 @@
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $main;
+  height: 100vh;
+  .container {
+    width: 60%;
+    height: 80%;
+    background-color: $white;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    .sidebar {
+      flex: 1;
+      background-color: $blue;
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: $darkBlue;
+        height: 75px;
+        .logo {
+          color: $white;
+          font-weight: bold;
+          font-size: 18px;
+        }
+        .user {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          .name {
+            color: $white;
+            font-size: 18px;
+          }
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+          button {
+            border: none;
+            background-color: transparent;
+            color: $white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            &:hover {
+              scale: 1.2;
+            }
+          }
+        }
+      }
+    }
+    .chat {
+      flex: 2;
+    }
+  }
+}
