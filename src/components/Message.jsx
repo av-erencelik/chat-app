@@ -8,7 +8,7 @@ export default function Message({ message }) {
   const { data } = useContext(ChatContext);
 
   const ref = useRef();
-
+  const date = +new Date(new Date().getTime() - new Date(message.date.toDate().getTime())).toISOString().slice(11, 13);
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
@@ -16,7 +16,7 @@ export default function Message({ message }) {
     <div className={`message ${message.senderId === currentUser.uid && "owner"}`} ref={ref}>
       <div className="messageInfo">
         <img src={message.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL} alt="pp"></img>
-        <span>Just now</span>
+        <span>{date.toString()} hour ago</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
