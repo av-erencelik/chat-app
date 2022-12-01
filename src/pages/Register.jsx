@@ -16,7 +16,7 @@ const schema = yup
       .max(20, "Must be less than 20 characters!")
       .required("Required!")
       .min(6, "Must be more than 6 characters!")
-      .matches(/^[a-zA-Z0-9_]+$/, "Must not contain speacial characters other than underscore!"),
+      .matches(/^[a-zA-Z\s]*$/, "Must not contain speacial characters other than underscore!"),
     email: yup.string().email("Invalid email address!").required("Required!"),
     password: yup
       .string()
