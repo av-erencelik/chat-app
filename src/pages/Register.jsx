@@ -48,7 +48,6 @@ export default function Register() {
     try {
       const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
       const storageRef = ref(storage, data.displayName);
-      console.log(data.file[0]);
       await uploadBytesResumable(storageRef, data.file[0]).then(() => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {

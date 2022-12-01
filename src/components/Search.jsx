@@ -6,7 +6,7 @@ import { db } from "../firebase";
 
 export default function Search() {
   const [user, setUser] = useState("");
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState("");
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const handleSearch = async () => {
