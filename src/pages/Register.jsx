@@ -2,6 +2,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import addAvatar from "../imgs/addAvatar.png";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../firebase";
+import { useState } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
+
 const schema = yup
   .object({
     displayName: yup
@@ -19,15 +26,58 @@ const schema = yup
       .matches(/[a-z]+/, "Must contain one lowercase character!")
       .matches(/[A-Z]+/, "Must contain one uppercase character!")
       .matches(/\d+/, "Must contain one number!"),
+    file: yup
+      .mixed()
+      .nullable()
+      .test("required", "You need to provide a file", (file) => {
+        if (file[0]) return true;
+        return false;
+      }),
   })
   .required();
 export default function Register() {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    setError("");
+    try {
+      const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const storageRef = ref(storage, data.displayName);
+      console.log(data.file[0]);
+      await uploadBytesResumable(storageRef, data.file[0]).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(response.user, {
+              displayName: data.displayName,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, "users", response.user.uid), {
+              uid: response.user.uid,
+              displayName: data.displayName,
+              email: data.email,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, "usersChat", response.user.uid), {});
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      });
+    } catch (err) {
+      if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+        setError("Email already in use!");
+      } else {
+        setError("Something Happened!");
+        console.log(err);
+      }
+    }
+  };
   return (
     <div className="formContainer">
       <div className="formWrapper">
@@ -61,9 +111,13 @@ export default function Register() {
             <img src={addAvatar} alt="add"></img>
             <span>Add an avatar</span>
           </label>
+          <p className="errors">{errors.file?.message}</p>
+          <p className="error">{error}</p>
           <button type="submit">Sign Up</button>
         </form>
-        <span className="link">You do have an account? Login</span>
+        <span className="link">
+          You do have an account? <Link to="/login">Login</Link>
+        </span>
       </div>
     </div>
   );

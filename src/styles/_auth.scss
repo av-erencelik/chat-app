@@ -51,6 +51,15 @@
           background-color: $darkBlue;
         }
       }
+      .error {
+        font-size: 14px;
+        color: $red;
+        text-align: center;
+      }
+      .errors {
+        font-size: 12px;
+        color: $red;
+      }
       .formField {
         display: flex;
         flex-direction: column;
@@ -83,7 +92,7 @@
         }
         .label {
           position: absolute;
-          top: 0;
+          top: -15px;
           display: block;
           transition: 0.2s;
           font-size: 1rem;

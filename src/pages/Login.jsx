@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import addAvatar from "../imgs/addAvatar.png";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useState } from "react";
+
 const schema = yup
   .object({
     email: yup.string().email("Invalid email address!").required("Required!"),
@@ -16,12 +20,21 @@ const schema = yup
   })
   .required();
 export default function Login() {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      navigate("/");
+    } catch (err) {
+      setError("Something went wrong!");
+    }
+  };
   return (
     <div className="formContainer">
       <div className="formWrapper">
@@ -42,9 +55,12 @@ export default function Login() {
             </label>
             <p className="errors">{errors.password?.message}</p>
           </div>
+          <p className="error">{error}</p>
           <button type="submit">Login</button>
         </form>
-        <span className="link">You don't have an account? Register</span>
+        <span className="link">
+          You don't have an account? <Link to="/register">Register</Link>
+        </span>
       </div>
     </div>
   );
